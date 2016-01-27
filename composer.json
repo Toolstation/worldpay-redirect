@@ -1,0 +1,36 @@
+{
+    "name": "toolstation/omnipay-worldpay-redirect",
+    "type": "library",
+    "description": "WorldPay Redirect XML driver for the Omnipay payment processing library",
+    "keywords": [
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "worldpay",
+        "payment",
+        "redirect"
+    ],
+    "homepage": "https://github.com/toolstation/omnipay-worldpay-redirect",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nick Snellock",
+            "email": "nick.snellock@toolstation.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Omnipay\\WorldPayRedirect\\" : "src/" }
+    },
+    "require": {
+        "omnipay/common": "~2.3"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

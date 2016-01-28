@@ -64,15 +64,34 @@ class Response extends AbstractResponse
      * Get Redirection Id
      *
      * @access public
-     * @return string
+     * @return string|null
      */
     public function getRedirectionId()
     {
-        if (isset($this->data->error)) {
-            $message = 'ERROR: ' . $this->data->error;
+        if ($this->data instanceof \SimpleXMLElement) {
+            if ($this->data->reference instanceof \SimpleXMLElement) {
+                $attributes = $this->data->reference->attributes();
+                if (isset($attributes['id'])) {
+                    return (string)$attributes['id'];
+                }
+            }
         }
+        return null;
+    }
 
-        return $message;
+    /**
+     * Get Redirection
+     *
+     * @access public
+     * @return string|null
+     */
+    public function getRedirection()
+    {
+        if ($this->data instanceof \SimpleXMLElement) {
+            $reference = $this->data->reference;
+            return (string)$reference;
+        }
+        return null;
     }
 
     /**

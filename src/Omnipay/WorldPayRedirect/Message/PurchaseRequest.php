@@ -108,7 +108,10 @@ class PurchaseRequest extends AbstractRequest
         $amount->addAttribute('currencyCode', $this->getCurrency());
         $amount->addAttribute('exponent', $this->getCurrencyDecimalPlaces());
 
-        $order->addChild('orderContent', '[CDATA ' . $this->getOrderContent() . ']');
+        $orderContent = $order->addChild('orderContent');
+        $orderContentNode = dom_import_simplexml($orderContent);
+        $orderContentOwner = $orderContentNode->ownerDocument;
+        $orderContentNode->appendChild($orderContentOwner->createCDATASection($this->getOrderContent()));
 
         $paymentMethodMask = $order->addChild('paymentMethodMask');
 

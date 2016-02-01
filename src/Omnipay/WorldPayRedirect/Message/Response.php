@@ -34,7 +34,7 @@ class Response extends AbstractResponse
 
 
         $xmlData = simplexml_import_dom(
-            $responseDom->documentElement->firstChild->firstChild
+            $responseDom->documentElement->firstChild
         );
 
         return new Response($request, $xmlData);
@@ -68,12 +68,10 @@ class Response extends AbstractResponse
      */
     public function getRedirectionId()
     {
-        if ($this->data instanceof \SimpleXMLElement) {
-            if ($this->data->reference instanceof \SimpleXMLElement) {
-                $attributes = $this->data->reference->attributes();
-                if (isset($attributes['id'])) {
-                    return (string)$attributes['id'];
-                }
+        if (isset($this->data->orderStatus)) {
+            $attributes = $this->data->orderStatus->reference->attributes();
+            if (isset($attributes['id'])) {
+                return (string)$attributes['id'];
             }
         }
         return null;
@@ -87,8 +85,8 @@ class Response extends AbstractResponse
      */
     public function getRedirection()
     {
-        if ($this->data instanceof \SimpleXMLElement) {
-            $reference = $this->data->reference;
+        if (isset($this->data->orderStatus)) {
+            $reference = $this->data->orderStatus->reference;
             return (string)$reference;
         }
         return null;
@@ -102,8 +100,8 @@ class Response extends AbstractResponse
      */
     public function getTransactionReference()
     {
-        if ($this->data instanceof \SimpleXMLElement) {
-            $attributes = $this->data->attributes();
+        if (isset($this->data->orderStatus)) {
+            $attributes = $this->data->orderStatus->attributes();
 
             if (isset($attributes['orderCode'])) {
                 return (string)$attributes['orderCode'];
@@ -121,6 +119,25 @@ class Response extends AbstractResponse
      */
     public function isSuccessful()
     {
+        if (isset($this->data->error)) {
+            return false;
+        }
+
         return true;
+    }
+
+    /**
+     * Get an error message
+     *
+     * @access public
+     * @return string
+     */
+    public function getMessage()
+    {
+        if (isset($this->data->error)) {
+            return (string)$this->data->error;
+        }
+
+        return '';
     }
 }

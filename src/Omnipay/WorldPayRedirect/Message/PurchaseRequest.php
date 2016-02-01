@@ -42,7 +42,7 @@ class PurchaseRequest extends AbstractRequest
      */
     public function getPaymentMethodInclude()
     {
-        return $this->getParameter('paymentMethodInclude');
+        return is_null($this->getParameter('paymentMethodInclude')) ? [] : $this->getParameter('paymentMethodInclude');
     }
 
     /**
@@ -66,7 +66,7 @@ class PurchaseRequest extends AbstractRequest
      */
     public function getPaymentMethodExclude()
     {
-        return $this->getParameter('paymentMethodExclude');
+        return is_null($this->getParameter('paymentMethodExclude')) ? [] : $this->getParameter('paymentMethodExclude');
     }
 
     /**

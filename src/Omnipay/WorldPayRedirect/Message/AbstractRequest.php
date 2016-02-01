@@ -161,15 +161,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
         $this->notify(
             [
-                'request' => preg_replace(
-                    '#\<cvc\>([0-9]{3,4})\<\/cvc\>#',
-                    '<cvc>***</cvc>',
-                    preg_replace(
-                        '#\<cardNumber\>([0-9]{10,})\<\/cardNumber\>#',
-                        '<cardNumber>**** **** **** ****</cardNumber>',
-                        $xml
-                    )
-                ),
+                'request' => $xml
             ]
         );
 

@@ -2,6 +2,7 @@
 
 namespace Omnipay\WorldPayRedirect;
 
+use Omnipay\Common\CreditCard;
 use Omnipay\Tests\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
@@ -45,10 +46,17 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchaseSuccess()
     {
-        $options = array(
+        $options = [
             'amount' => '10.00',
             'transactionId' => 'T0211010',
-        );
+            'card' => new CreditCard(
+                [
+                    'firstName' => 'Example',
+                    'lastName' => 'User',
+                    'email' => 'example.user@test.com',
+                ]
+            ),
+        ];
 
         $this->setMockHttpResponse('PurchaseSuccess.txt');
 
@@ -60,16 +68,23 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchaseError()
     {
-        $options = array(
+        $options = [
             'amount' => '10.00',
             'transactionId' => 'T0211010',
-        );
+            'card' => new CreditCard(
+                [
+                    'firstName' => 'Example',
+                    'lastName' => 'User',
+                    'email' => 'example.user@test.com',
+                ]
+            ),
+        ];
 
         $this->setMockHttpResponse('PurchaseFailure.txt');
 
         $response = $this->gateway->purchase($options)->send();
 
         $this->assertFalse($response->isSuccessful());
-        $this->assertSame('CARD EXPIRED', $response->getMessage());
+        $this->assertSame('No description for XMLOrder', $response->getMessage());
     }
 }

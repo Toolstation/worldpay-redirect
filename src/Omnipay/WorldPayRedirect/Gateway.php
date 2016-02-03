@@ -125,5 +125,4 @@ class Gateway extends AbstractGateway
             $parameters
         );
     }
-
 }

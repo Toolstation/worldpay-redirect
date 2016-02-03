@@ -25,7 +25,10 @@ class ResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('T0211010', $response->getTransactionReference());
-        $this->assertEquals('https://secure-test.worldpay.com/jsp/shopper/SelectPaymentMethod.jsp?OrderKey=MYMERCHANT%5ET0211010', $response->getRedirection());
+        $this->assertEquals(
+            'https://secure-test.worldpay.com/jsp/shopper/SelectPaymentMethod.jsp?OrderKey=MYMERCHANT%5ET0211010',
+            $response->getRedirection()
+        );
         $this->assertEquals('1234567890', $response->getRedirectionId());
     }
 

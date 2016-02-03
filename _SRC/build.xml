@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="../" default="build" name="New Extranet">
+
+    <!-- Path to phpunit, this is pulled in by composer -->
+    <property name="phpunit" value="${basedir}/vendor/bin/phpunit"/>
+
+    <!-- Path to phpcs, this is pulled in by composer -->
+    <property name="phpcs" value="${basedir}/vendor/bin/phpcs"/>
+
+    <!-- Path to the _SRC directory -->
+    <property name="src.dir" value="${basedir}/_SRC"/>
+
+    <target depends="" name="build"/>
+
+    <target depends="lint.php,phpcs,phpunit" name="quick.tests"/>
+
+    <target depends="lint.php,phpcs,phpunit-with-coverage" name="full.tests"/>
+
+    <target description="Cleanup build artifacts" name="clean">
+        <delete dir="${basedir}/_SRC/build/coverage"/>
+        <delete dir="${basedir}/_SRC/build/junit"/>
+        <delete dir="${basedir}/_SRC/build/quality"/>
+        <delete dir="${basedir}/_SRC/build"/>
+    </target>
+
+    <target depends="clean" description="Prepare for build" name="prepare">
+        <mkdir dir="${basedir}/_SRC/build"/>
+        <mkdir dir="${basedir}/_SRC/build/coverage"/>
+        <mkdir dir="${basedir}/_SRC/build/junit"/>
+        <mkdir dir="${basedir}/_SRC/build/quality"/>
+        <chmod file="${basedir}/_SRC/build/**" perm="777" type="both"/>
+    </target>
+
+    <!-- *************************************************************************** -->
+    <!-- Code Quality Tools -->
+
+    <target description="Perform syntax check of sourcecode files" name="lint.php">
+        <apply executable="php" failonerror="true" parallel="false">
+            <arg value="-l"/>
+            <fileset dir="${basedir}" followsymlinks="false">
+                <include name="**/*.php"/>
+                <exclude name="**/database/**"/>
+                <exclude name="**/vendor/**"/>
+                <exclude name="**/cache/**"/>
+                <exclude name="**/*.blade.php"/>
+                <exclude name="_ide_helper.php"/>
+                <exclude name="**/autoload.php"/>
+                <exclude name="**/storage/**"/>
+            </fileset>
+        </apply>
+    </target>
+
+    <target description="Perform phpunit tests" name="phpunit">
+        <exec executable="${phpunit}" failonerror="true">
+            <arg value="--configuration"/>
+            <arg path="${src.dir}/phpunit.xml"/>
+        </exec>
+    </target>
+
+    <target depends="prepare" description="Perform phpunit tests with coverage report" name="phpunit-with-coverage">
+        <exec executable="${phpunit}" failonerror="true">
+            <arg value="--configuration"/>
+            <arg path="${src.dir}/phpunit-with-coverage.xml"/>
+        </exec>
+    </target>
+
+    <target description="Perform PHP Code_Sniffer checks" name="phpcs">
+        <exec executable="${phpcs}" failonerror="true">
+            <arg value="--standard=PSR2"/>
+            <arg value="--ignore=*/vendor/*"/>
+            <arg value="${basedir}"/>
+        </exec>
+    </target>
+
+</project>

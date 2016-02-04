@@ -4,6 +4,7 @@ namespace Omnipay\WorldPayRedirect;
 
 use Omnipay\Common\CreditCard;
 use Omnipay\Tests\GatewayTestCase;
+use Omnipay\WorldPayRedirect\Message\AbstractRequest;
 
 class GatewayTest extends GatewayTestCase
 {
@@ -60,10 +61,26 @@ class GatewayTest extends GatewayTestCase
 
         $this->setMockHttpResponse('PurchaseSuccess.txt');
 
-        $response = $this->gateway->purchase($options)->send();
+        $observer = new TestObserver();
 
+        $omnipay = $this->gateway->purchase($options);
+
+        $omnipay->attach($observer);
+
+        $response = $omnipay->send();
+
+        $this->assertTrue($observer->observed);
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('T0211010', $response->getTransactionReference());
+
+        $omnipay->detach($observer);
+        $observer->observed = false;
+
+        $options['testMode'] = true;
+
+        $omnipay = $this->gateway->purchase($options);
+
+        $this->assertFalse($observer->observed);
     }
 
     public function testPurchaseError()

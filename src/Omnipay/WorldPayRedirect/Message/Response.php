@@ -73,7 +73,7 @@ class Response extends AbstractResponse
             if (isset($attributes['id'])) {
                 return (string)$attributes['id'];
             }
-        }
+        } //@codeCoverageIgnore
         return null;
     }
 
@@ -106,7 +106,7 @@ class Response extends AbstractResponse
             if (isset($attributes['orderCode'])) {
                 return (string)$attributes['orderCode'];
             }
-        }
+        }//@codeCoverageIgnore
 
         return null;
     }

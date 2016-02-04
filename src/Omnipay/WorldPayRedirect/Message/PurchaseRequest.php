@@ -115,14 +115,18 @@ class PurchaseRequest extends AbstractRequest
 
         $paymentMethodMask = $order->addChild('paymentMethodMask');
 
-        foreach ($this->getPaymentMethodInclude() as $paymentMethodInclude) {
-            $include = $paymentMethodMask->addChild('include');
-            $include->addAttribute('code', $paymentMethodInclude);
+        if (is_array($this->getPaymentMethodInclude())) {
+            foreach ($this->getPaymentMethodInclude() as $paymentMethodInclude) {
+                $include = $paymentMethodMask->addChild('include');
+                $include->addAttribute('code', $paymentMethodInclude);
+            }
         }
 
-        foreach ($this->getPaymentMethodExclude() as $paymentMethodExclude) {
-            $include = $paymentMethodMask->addChild('exclude');
-            $include->addAttribute('code', $paymentMethodExclude);
+        if (is_array($this->getPaymentMethodExclude())) {
+            foreach ($this->getPaymentMethodExclude() as $paymentMethodExclude) {
+                $include = $paymentMethodMask->addChild('exclude');
+                $include->addAttribute('code', $paymentMethodExclude);
+            }
         }
 
         $shopper = $order->addChild('shopper');
@@ -144,7 +148,7 @@ class PurchaseRequest extends AbstractRequest
         $address->addChild('postalCode', $this->getCard()->getShippingPostcode());
         $address->addChild('city', $this->getCard()->getShippingCity());
         $address->addChild('countryCode', $this->getCard()->getShippingCountry());
-        $address->addChild('telephoneNumber', $this->getCard()->getshippingPhone());
+        $address->addChild('telephoneNumber', $this->getCard()->getShippingPhone());
 
         return $data;
     }

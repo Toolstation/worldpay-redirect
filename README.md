@@ -14,7 +14,7 @@ add it to your `composer.json` file:
 ```json
 {
     "require": {
-        "toolstation/omnipay-worldpay-Redirect": "~1.0"
+        "toolstation/omnipay-worldpay-redirect": "~1.0"
     }
 }
 ```

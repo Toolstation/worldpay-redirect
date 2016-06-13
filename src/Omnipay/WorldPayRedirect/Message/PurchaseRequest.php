@@ -150,6 +150,16 @@ class PurchaseRequest extends AbstractRequest
         $address->addChild('countryCode', $this->getCard()->getShippingCountry());
         $address->addChild('telephoneNumber', $this->getCard()->getShippingPhone());
 
+        $billingAddress = $order->addChild('billingAddress');
+        $address = $billingAddress->addChild('address');
+        $address->addChild('firstName', $this->getCard()->getBillingFirstName());
+        $address->addChild('lastName', $this->getCard()->getBillingLastName());
+        $address->addChild('street', $this->getCard()->getBillingAddress1());
+        $address->addChild('postalCode', $this->getCard()->getBillingPostcode());
+        $address->addChild('city', $this->getCard()->getBillingCity());
+        $address->addChild('countryCode', $this->getCard()->getBillingCountry());
+        $address->addChild('telephoneNumber', $this->getCard()->getBillingPhone());
+
         return $data;
     }
 

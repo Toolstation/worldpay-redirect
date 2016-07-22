@@ -115,15 +115,20 @@ class PurchaseRequest extends AbstractRequest
 
         $paymentMethodMask = $order->addChild('paymentMethodMask');
 
-        if (is_array($this->getPaymentMethodInclude())) {
-            foreach ($this->getPaymentMethodInclude() as $paymentMethodInclude) {
+        $paymentMethodIncludes = $this->getPaymentMethodInclude();
+        if (is_array($paymentMethodIncludes) && count($paymentMethodIncludes) > 0) {
+            foreach ($paymentMethodIncludes as $paymentMethodInclude) {
                 $include = $paymentMethodMask->addChild('include');
                 $include->addAttribute('code', $paymentMethodInclude);
             }
+        } else {
+            $include = $paymentMethodMask->addChild('include');
+            $include->addAttribute('code', 'ALL');
         }
 
-        if (is_array($this->getPaymentMethodExclude())) {
-            foreach ($this->getPaymentMethodExclude() as $paymentMethodExclude) {
+        $paymentMethodExcludes = $this->getPaymentMethodExclude();
+        if (is_array($paymentMethodExcludes)  && count($paymentMethodExcludes) > 0) {
+            foreach ($paymentMethodExcludes as $paymentMethodExclude) {
                 $include = $paymentMethodMask->addChild('exclude');
                 $include->addAttribute('code', $paymentMethodExclude);
             }

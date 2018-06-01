@@ -71,9 +71,10 @@ class Response extends AbstractResponse
         if (isset($this->data->orderStatus)) {
             $attributes = $this->data->orderStatus->reference->attributes();
             if (isset($attributes['id'])) {
-                return (string)$attributes['id'];
+                return (string) $attributes['id'];
             }
-        } //@codeCoverageIgnore
+        }
+
         return null;
     }
 
@@ -87,8 +88,9 @@ class Response extends AbstractResponse
     {
         if (isset($this->data->orderStatus)) {
             $reference = $this->data->orderStatus->reference;
-            return (string)$reference;
+            return (string) $reference;
         }
+
         return null;
     }
 
@@ -104,9 +106,9 @@ class Response extends AbstractResponse
             $attributes = $this->data->orderStatus->attributes();
 
             if (isset($attributes['orderCode'])) {
-                return (string)$attributes['orderCode'];
+                return (string) $attributes['orderCode'];
             }
-        }//@codeCoverageIgnore
+        }
 
         return null;
     }
@@ -115,7 +117,7 @@ class Response extends AbstractResponse
      * Get is successful
      *
      * @access public
-     * @return boolean
+     * @return booleanis
      */
     public function isSuccessful()
     {
@@ -135,7 +137,7 @@ class Response extends AbstractResponse
     public function getMessage()
     {
         if (isset($this->data->error)) {
-            return (string)$this->data->error;
+            return (string) $this->data->error;
         }
 
         return '';

@@ -125,4 +125,20 @@ class Gateway extends AbstractGateway
             $parameters
         );
     }
+    
+    /**
+     * Purchase
+     *
+     * @param array $parameters Parameters
+     *
+     * @access public
+     * @return \Omnipay\WorldPayRedirect\Message\PurchaseRequest
+     */
+    public function capture(array $parameters = [])
+    {
+        return $this->createRequest(
+            '\Omnipay\WorldPayRedirect\Message\CaptureRequest',
+            $parameters
+        );
+    }
 }

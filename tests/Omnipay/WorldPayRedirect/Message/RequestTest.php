@@ -31,10 +31,20 @@ class RequestTest extends TestCase
         $card->shouldReceive('getShippingFirstName')->andReturn('firstname');
         $card->shouldReceive('getShippingLastName')->andReturn('lastname');
         $card->shouldReceive('getShippingAddress1')->andReturn('address1');
+        $card->shouldReceive('getShippingAddress2')->andReturn('address2');
         $card->shouldReceive('getShippingPostcode')->andReturn('postcode');
         $card->shouldReceive('getShippingCity')->andReturn('city');
         $card->shouldReceive('getShippingCountry')->andReturn('country');
         $card->shouldReceive('getShippingPhone')->andReturn('telephone');
+
+        $card->shouldReceive('getBillingFirstName')->andReturn('firstname');
+        $card->shouldReceive('getBillingLastName')->andReturn('lastname');
+        $card->shouldReceive('getBillingAddress1')->andReturn('address1');
+        $card->shouldReceive('getBillingAddress2')->andReturn('address2');
+        $card->shouldReceive('getBillingPostcode')->andReturn('postcode');
+        $card->shouldReceive('getBillingCity')->andReturn('city');
+        $card->shouldReceive('getBillingCountry')->andReturn('country');
+        $card->shouldReceive('getBillingPhone')->andReturn('telephone');
 
         $omnipayRequest = new PurchaseRequest($guzzle, $request);
 

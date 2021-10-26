@@ -23,7 +23,7 @@
         "psr-0": { "Omnipay\\WorldPayRedirect\\" : "src/" }
     },
     "require": {
-        "omnipay/common": "*"
+        "omnipay/common": "^3"
     },
     "require-dev": {
         "omnipay/tests": "~2.0"

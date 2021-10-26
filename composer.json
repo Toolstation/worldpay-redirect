@@ -26,6 +26,12 @@
         "omnipay/common": "^3"
     },
     "require-dev": {
-        "omnipay/tests": "~2.0"
+        "omnipay/tests": "~3.0",
+        "friendsofphp/php-cs-fixer": "^3.0"
+    },
+    "scripts": {
+        "test": "phpunit tests/",
+        "cs:check": "vendor/bin/php-cs-fixer fix --config .php-cs-fixer.php --dry-run",
+        "cs:fix": "vendor/bin/php-cs-fixer fix --config .php-cs-fixer.php"
     }
 }

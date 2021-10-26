@@ -1,7 +1,8 @@
 <?php
 /**
- * WorldPay Redirect Response
+ * WorldPay Redirect Response.
  */
+
 namespace Omnipay\WorldPayRedirect\Message;
 
 use DOMDocument;
@@ -10,12 +11,10 @@ use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
 
 /**
- * Class Response
- * @package Omnipay\WorldPayRedirect\Message
+ * Class Response.
  */
 class Response extends AbstractResponse
 {
-
     /**
      * @param RequestInterface $request
      * @param                  $data
@@ -29,24 +28,22 @@ class Response extends AbstractResponse
             throw new InvalidResponseException();
         }
 
-        $responseDom = new DOMDocument;
+        $responseDom = new DOMDocument();
         $responseDom->loadXML($data);
-
 
         $xmlData = simplexml_import_dom(
             $responseDom->documentElement->firstChild
         );
 
-        return new Response($request, $xmlData);
+        return new self($request, $xmlData);
     }
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param RequestInterface $request Request
      * @param string           $data    Data
      *
-     * @access public
      * @throws InvalidResponseException
      */
     public function __construct(RequestInterface $request, $data)
@@ -61,9 +58,8 @@ class Response extends AbstractResponse
     }
 
     /**
-     * Get Redirection Id
+     * Get Redirection Id.
      *
-     * @access public
      * @return string|null
      */
     public function getRedirectionId()
@@ -79,15 +75,15 @@ class Response extends AbstractResponse
     }
 
     /**
-     * Get Redirection
+     * Get Redirection.
      *
-     * @access public
      * @return string|null
      */
     public function getRedirection()
     {
         if (isset($this->data->orderStatus)) {
             $reference = $this->data->orderStatus->reference;
+
             return (string) $reference;
         }
 
@@ -95,9 +91,8 @@ class Response extends AbstractResponse
     }
 
     /**
-     * Get transaction reference
+     * Get transaction reference.
      *
-     * @access public
      * @return string
      */
     public function getTransactionReference()
@@ -114,9 +109,8 @@ class Response extends AbstractResponse
     }
 
     /**
-     * Get is successful
+     * Get is successful.
      *
-     * @access public
      * @return booleanis
      */
     public function isSuccessful()
@@ -129,9 +123,8 @@ class Response extends AbstractResponse
     }
 
     /**
-     * Get an error message
+     * Get an error message.
      *
-     * @access public
      * @return string
      */
     public function getMessage()

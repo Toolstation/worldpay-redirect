@@ -2,9 +2,7 @@
 
 namespace Omnipay\WorldPayRedirect\Message;
 
-use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Tests\TestCase;
-use Mockery;
 
 class ResponseTest extends TestCase
 {

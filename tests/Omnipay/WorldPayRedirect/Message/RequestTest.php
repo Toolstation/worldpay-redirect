@@ -4,6 +4,7 @@ namespace Omnipay\WorldPayRedirect\Message;
 
 use Omnipay\Tests\TestCase;
 use Mockery;
+use Omnipay\Common\Http\Client;
 
 class RequestTest extends TestCase
 {
@@ -14,16 +15,29 @@ class RequestTest extends TestCase
 
     public function testGetEndPoint()
     {
-        $guzzle = Mockery::mock('Guzzle\Http\Client');
+        $httpClient = Mockery::mock(Client::class);
         $request = Mockery::mock('Symfony\Component\HttpFoundation\Request');
-        $omnipayRequest = new TestRequest($guzzle, $request);
+        $omnipayRequest = new class ($httpClient, $request) extends AbstractRequest {
+            public function getTransactionType()
+            {
+            }
+
+            public function getData()
+            {
+            }
+
+            public function getEndpoint()
+            {
+                return parent::getEndpoint();
+            }
+        };
         $omnipayRequest->setTestMode(true);
-        $this->assertEquals(AbstractRequest::EP_HOST_TEST . AbstractRequest::EP_PATH, $omnipayRequest->getEndpoint());
+        $this->assertEquals(AbstractRequest::EP_HOST_TEST.AbstractRequest::EP_PATH, $omnipayRequest->getEndpoint());
     }
 
     public function testPurchaseRequestSetters()
     {
-        $guzzle = Mockery::mock('Guzzle\Http\Client');
+        $httpClient = Mockery::mock(Client::class);
         $request = Mockery::mock('Symfony\Component\HttpFoundation\Request');
 
         $card = Mockery::mock('Omnipay\Common\CreditCard');
@@ -46,7 +60,7 @@ class RequestTest extends TestCase
         $card->shouldReceive('getBillingCountry')->andReturn('country');
         $card->shouldReceive('getBillingPhone')->andReturn('telephone');
 
-        $omnipayRequest = new PurchaseRequest($guzzle, $request);
+        $omnipayRequest = new PurchaseRequest($httpClient, $request);
 
         $this->assertEquals(1, $omnipayRequest->getTransactionType());
 
@@ -66,7 +80,6 @@ class RequestTest extends TestCase
         $data = $omnipayRequest->getData();
 
         $this->assertContains('submit', $data->asXml());
-        $this->assertNotContains('include', $data->asXml());
         $this->assertNotContains('exclude', $data->asXml());
 
         $omnipayRequest->setPaymentMethodInclude(['include']);

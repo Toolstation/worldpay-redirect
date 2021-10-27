@@ -6,14 +6,13 @@
 namespace Omnipay\WorldPayRedirect\Message;
 
 /**
- * Omnipay WorldPay Redirect Purchase Request
+ * Omnipay WorldPay Redirect Purchase Request.
  */
 class PurchaseRequest extends AbstractRequest
 {
     /**
-     * Get order content
+     * Get order content.
      *
-     * @access public
      * @return string
      */
     public function getOrderContent()
@@ -22,11 +21,10 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * Set order content
+     * Set order content.
      *
      * @param string $value Order content
      *
-     * @access public
      * @return string
      */
     public function setOrderContent($value)
@@ -35,9 +33,8 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * Get include payment methods
+     * Get include payment methods.
      *
-     * @access public
      * @return array
      */
     public function getPaymentMethodInclude()
@@ -46,11 +43,10 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * Set include payment methods
+     * Set include payment methods.
      *
      * @param array $value Payment methods accepted
      *
-     * @access public
      * @return array
      */
     public function setPaymentMethodInclude($value)
@@ -59,9 +55,8 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * Get exclude payment methods
+     * Get exclude payment methods.
      *
-     * @access public
      * @return array
      */
     public function getPaymentMethodExclude()
@@ -70,11 +65,10 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * Set exclude payment methods
+     * Set exclude payment methods.
      *
      * @param array $value Payment methods not accepted
      *
-     * @access public
      * @return array
      */
     public function setPaymentMethodExclude($value)
@@ -83,9 +77,8 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * Get data
+     * Get data.
      *
-     * @access public
      * @return \SimpleXMLElement
      */
     public function getData()
@@ -97,7 +90,7 @@ class PurchaseRequest extends AbstractRequest
         $order = $data->addChild('submit')->addChild('order');
         $order->addAttribute('orderCode', $this->getTransactionId());
         $installationId = $this->getInstallation();
-        if (!empty($installationId)) {
+        if (! empty($installationId)) {
             $order->addAttribute('installationId', $installationId);
         }
 
@@ -127,7 +120,7 @@ class PurchaseRequest extends AbstractRequest
         }
 
         $paymentMethodExcludes = $this->getPaymentMethodExclude();
-        if (is_array($paymentMethodExcludes)  && count($paymentMethodExcludes) > 0) {
+        if (is_array($paymentMethodExcludes) && count($paymentMethodExcludes) > 0) {
             foreach ($paymentMethodExcludes as $paymentMethodExclude) {
                 $include = $paymentMethodMask->addChild('exclude');
                 $include->addAttribute('code', $paymentMethodExclude);
@@ -138,7 +131,7 @@ class PurchaseRequest extends AbstractRequest
 
         $email = $this->getCard()->getEmail();
 
-        if (!empty($email)) {
+        if (! empty($email)) {
             $shopper->addChild(
                 'shopperEmailAddress',
                 $this->getCard()->getEmail()
@@ -172,7 +165,7 @@ class PurchaseRequest extends AbstractRequest
 
     /**
      * Return a value to indicate the transaction type.
-     * @return integer
+     * @return int
      */
     public function getTransactionType()
     {

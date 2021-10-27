@@ -6,30 +6,29 @@
 namespace Omnipay\WorldPayRedirect\Message;
 
 /**
- * Class AbstractRequest
- * @package Omnipay\WorldPayRedirect\Message
+ * Class AbstractRequest.
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     /**
      * The base URL for the live service.
      */
-    const EP_HOST_LIVE = 'https://secure.worldpay.com';
+    public const EP_HOST_LIVE = 'https://secure.worldpay.com';
 
     /**
      * The base URL for the sandbox service.
      */
-    const EP_HOST_TEST = 'https://secure-test.worldpay.com';
+    public const EP_HOST_TEST = 'https://secure-test.worldpay.com';
 
     /**
-     * The service URI
+     * The service URI.
      */
-    const EP_PATH = '/jsp/merchant/xml/paymentService.jsp';
+    public const EP_PATH = '/jsp/merchant/xml/paymentService.jsp';
 
     /**
      * The curent Worldpay Redirect APi version.
      */
-    const VERSION = '1.4';
+    public const VERSION = '1.4';
 
     /**
      * Observers. Used to report requests and responses to.
@@ -39,9 +38,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     private $observers = [];
 
     /**
-     * Get merchant
+     * Get merchant.
      *
-     * @access public
      * @return string
      */
     public function getMerchant()
@@ -50,11 +48,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * Set merchant
+     * Set merchant.
      *
      * @param string $value Merchant
      *
-     * @access public
      * @return void
      */
     public function setMerchant($value)
@@ -63,9 +60,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * Get password
+     * Get password.
      *
-     * @access public
      * @return string
      */
     public function getPassword()
@@ -74,11 +70,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * Set password
+     * Set password.
      *
      * @param string $value Password
      *
-     * @access public
      * @return void
      */
     public function setPassword($value)
@@ -101,9 +96,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * Get installation
+     * Get installation.
      *
-     * @access public
      * @return string
      */
     public function getInstallation()
@@ -112,11 +106,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * Set installation
+     * Set installation.
      *
      * @param string $value Installation
      *
-     * @access public
      * @return void
      */
     public function setInstallation($value)
@@ -125,11 +118,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * Send data
+     * Send data.
      *
      * @param \SimpleXMLElement $data Data
      *
-     * @access public
      * @return \Omnipay\Common\Message\ResponseInterface
      */
     public function sendData($data)
@@ -149,11 +141,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $document->appendChild($node);
 
         $authorisation = base64_encode(
-            $this->getMerchant() . ':' . $this->getPassword()
+            $this->getMerchant().':'.$this->getPassword()
         );
 
         $headers = [
-            'Authorization' => 'Basic ' . $authorisation,
+            'Authorization' => 'Basic '.$authorisation,
             'Content-Type' => 'text/xml; charset=utf-8',
         ];
 
@@ -161,15 +153,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
         $this->notify(
             [
-                'request' => $xml
+                'request' => $xml,
             ]
         );
 
         $httpResponse = $this->httpClient
-            ->post($this->getEndpoint(), $headers, $xml)
-            ->send();
+            ->request('POST', $this->getEndpoint(), $headers, $xml);
 
-        $this->notify(['response' => (string)$httpResponse->getBody()]);
+        $this->notify(['response' => (string) $httpResponse->getBody()]);
 
         return $this->response = Response::make(
             $this,
@@ -178,20 +169,19 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * Get endpoint
+     * Get endpoint.
      *
      * Returns endpoint depending on test mode
      *
-     * @access protected
      * @return string
      */
     protected function getEndpoint()
     {
         if ($this->getTestMode()) {
-            return self::EP_HOST_TEST . self::EP_PATH;
+            return self::EP_HOST_TEST.self::EP_PATH;
         }
 
-        return self::EP_HOST_LIVE . self::EP_PATH;
+        return self::EP_HOST_LIVE.self::EP_PATH;
     }
 
     /**
@@ -214,7 +204,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $this->observers = array_filter(
             $this->observers,
             function ($a) use ($observer) {
-                return (!($a === $observer));
+                return ! ($a === $observer);
             }
         );
     }
@@ -233,7 +223,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * Return a value to indicate the transaction type.
-     * @return integer
+     * @return int
      */
     abstract public function getTransactionType();
 }

@@ -5,11 +5,12 @@ namespace Omnipay\WorldPayRedirect;
 use Omnipay\Common\CreditCard;
 use Omnipay\Tests\GatewayTestCase;
 use Omnipay\WorldPayRedirect\Message\AbstractRequest;
+use Omnipay\WorldPayRedirect\Message\Observer;
 
 class GatewayTest extends GatewayTestCase
 {
     /**
-     * The WorldPayXML gateway
+     * The WorldPayXML gateway.
      * @var \Omnipay\WorldPayRedirect\Gateway
      */
     public $gateway;
@@ -61,7 +62,20 @@ class GatewayTest extends GatewayTestCase
 
         $this->setMockHttpResponse('PurchaseSuccess.txt');
 
-        $observer = new TestObserver();
+        $observer = new class() implements Observer {
+            public $observed = false;
+
+            /**
+             * @param AbstractRequest $observable
+             * @param array           $data
+             *
+             * @return void
+             */
+            public function update(AbstractRequest $observable, array $data)
+            {
+                $this->observed = true;
+            }
+        };
 
         $omnipay = $this->gateway->purchase($options);
 

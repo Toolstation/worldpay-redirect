@@ -6,12 +6,10 @@
 namespace Omnipay\WorldPayRedirect\Message;
 
 /**
- * Interface Observer
- * @package Omnipay\WorldPayRedirect\Message
+ * Interface Observer.
  */
 interface Observer
 {
-
     /**
      * Method to be implemented by observers.
      *

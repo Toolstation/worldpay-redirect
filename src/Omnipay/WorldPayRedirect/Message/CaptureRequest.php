@@ -6,12 +6,12 @@
 namespace Omnipay\WorldPayRedirect\Message;
 
 /**
- * Omnipay WorldPay Redirect Purchase Request
+ * Omnipay WorldPay Redirect Purchase Request.
  */
 class CaptureRequest extends AbstractRequest
 {
     /**
-     * Sets the day of month value for the request
+     * Sets the day of month value for the request.
      *
      * @param string $value
      * @return AbstractRequest Provides a fluent interface
@@ -22,7 +22,7 @@ class CaptureRequest extends AbstractRequest
     }
 
     /**
-     * Sets the month value for the request
+     * Sets the month value for the request.
      *
      * @param string $value
      * @return AbstractRequest Provides a fluent interface
@@ -33,7 +33,7 @@ class CaptureRequest extends AbstractRequest
     }
 
     /**
-     * Sets the year value for the request
+     * Sets the year value for the request.
      *
      * @param string $value
      * @return AbstractRequest Provides a fluent interface
@@ -44,7 +44,7 @@ class CaptureRequest extends AbstractRequest
     }
 
     /**
-     * Sets the amount value for the request
+     * Sets the amount value for the request.
      *
      * @param string $value
      * @return AbstractRequest Provides a fluent interface
@@ -55,7 +55,7 @@ class CaptureRequest extends AbstractRequest
     }
 
     /**
-     * Sets the currencyCode value for the request
+     * Sets the currencyCode value for the request.
      *
      * @param string $value
      * @return AbstractRequest Provides a fluent interface
@@ -66,7 +66,7 @@ class CaptureRequest extends AbstractRequest
     }
 
     /**
-     * Sets the exponent value for the request
+     * Sets the exponent value for the request.
      *
      * @param string $value
      * @return AbstractRequest Provides a fluent interface
@@ -77,7 +77,7 @@ class CaptureRequest extends AbstractRequest
     }
 
     /**
-     * Sets the debitCreditIndicator value for the request
+     * Sets the debitCreditIndicator value for the request.
      *
      * @param string $value
      * @return AbstractRequest Provides a fluent interface
@@ -89,9 +89,8 @@ class CaptureRequest extends AbstractRequest
 
     /**
      * Gets the xml data object for the payment capture request to worldpay.
-     * Ref: http://support.worldpay.com/support/kb/gg/corporate-gateway-guide/content/manage/modificationrequests.htm#Capture
+     * Ref: http://support.worldpay.com/support/kb/gg/corporate-gateway-guide/content/manage/modificationrequests.htm#Capture.
      *
-     * @access public
      * @return \SimpleXMLElement
      */
     public function getData()
@@ -126,7 +125,7 @@ class CaptureRequest extends AbstractRequest
 
     /**
      * Return a value to indicate the transaction type.
-     * @return integer
+     * @return int
      */
     public function getTransactionType()
     {
